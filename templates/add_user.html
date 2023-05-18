@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h3>{{ message }}</h3>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
+        <h1>Sign Up</h1>
+        <br>
+        <form method="POST" action="{{ url_for('add_user') }}"  style="background-color: rgb(153, 165, 42); padding: 14px;"> 
+            {{ form.hidden_tag() }}
+
+            {{ form.name.label(class = "form-label") }}
+            
+            {{ form.name(class = "form-control") }}
+            <br>
+            {{ form.username.label(class = "form-label") }}
+            
+            {{ form.username(class = "form-control") }}
+            <br>
+
+            {{ form.email.label(class = "form-label") }}
+            
+            {{ form.email(class = "form-control") }}
+            <br>
+
+            {{ form.city.label(class = "form-label") }}
+            
+            {{ form.city(class = "form-control") }}
+            <br>
+
+            {{ form.hashed_password.label(class = "form-label") }}
+            
+            {{ form.hashed_password(class = "form-control") }}
+            <br>
+
+            {{ form.hashed_password2.label(class = "form-label") }}
+            
+            {{ form.hashed_password2(class = "form-control") }}
+            <br>
+
+
+            {{ form.submit(class = "form-label") }}
+        </form>
+        <br><br><br>
+
+        <!-- {% for our_user in our_users %}
+            {{ our_user.user_id }}. <a href="{{ url_for('user_view', user_id = our_user.user_id) }}">{{ our_user.name }}</a>-
+            {{ our_user.username }}-{{ our_user.email }} - {{ our_user.city }} 
+             <a href="{{ url_for('delete', user_id = our_user.user_id) }}">Delete</a><br>
+        {% endfor %} -->
+
+
+{% endblock %}

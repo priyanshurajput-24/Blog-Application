@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Add Blog Posts :</h1>
+<div class="card-body">
+    <div class="container">
+            <div class="row">
+                    <div class="col-md-8">
+                        <br>
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+                
+                            {{ form.title.label(class = "form-label") }}
+                            
+                            {{ form.title(class =  "form-control") }}
+                            <br>
+                
+                            {{ form.key_note.label(class = "form-label") }}
+                            
+                            {{ form.key_note(class =  "form-control") }}
+                            <br>
+                
+                            {{ form.content.label(class = "form-label") }}
+                            
+                            {{ form.content(class =  "form-control") }}
+                            <br>
+ 
+                            {{ ckeditor.load() }}
+                            {{ ckeditor.config(name='content') }}
+
+                            <br>
+
+                            {{ form.submit(class = "form-label btn btn-primary") }}
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+{% endblock %}

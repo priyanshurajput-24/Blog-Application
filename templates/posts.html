@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Blog Posts ... </h1>
+<br><br>
+
+{% for post in posts %}
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <h4><a href="{{ url_for('post', post_id = post.post_id) }}" style="text-decoration: none; color: brown;">{{ post.title }}</a> </h4>
+    {% set list1 = post.date_posted|string %}
+    <small><a href="{{ url_for('user_view', user_id = post.poster.user_id) }}" style="text-decoration: none;">{{ post.poster.name }}</a> |
+    {{ post.key_note }} |
+    {{ list1[0:10] }}</small><br><br>
+    {{ post.content|safe }} <br><br>
+    <a href="{{ url_for('post', post_id = post.post_id) }}" class="btn btn-secondary btn-sm">View Posts</a>
+    <a href="{{ url_for('post_comment', post_id = post.post_id) }}" class="btn btn-primary btn-sm"> {{ post.comments|length }} Comment</a>
+
+
+    {% if current_user.name in post.likes|map(attribute = "author")|list %}
+        <a href="{{ url_for('like_post', post_id = post.post_id) }}" class="btn btn-warning btn-sm"> {{ post.likes|length }} Liked</a>    
+    {% else %}
+        <a href="{{ url_for('like_post', post_id = post.post_id) }}" class="btn btn-success btn-sm"> {{ post.likes|length }} Like</a>    
+    {% endif %}
+
+
+
+    {% if post.author_id == current_user.user_id %}
+
+        <a href="{{ url_for('edit_post', post_id = post.post_id) }}" class="btn btn-secondary btn-sm">Edit Post</a>
+        <a href="{{ url_for('delete_post', post_id = post.post_id) }}" class="btn btn-danger btn-sm">Delete Post</a><br>
+    
+    {% endif %}
+
+</div>
+{% endfor %}
+
+{% endblock %}

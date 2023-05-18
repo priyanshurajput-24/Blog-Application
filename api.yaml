@@ -1,0 +1,452 @@
+openapi: 3.0.3
+info:
+  title: Blog Application  - OpenAPI 3.0
+  version: 1.0.0
+  description: >
+    This is sample of Blog Application.Here i give schema of table in the
+    database and how to manipulate them and access in real time through OpenApi.
+    <img src =
+    "https://mermaid.ink/img/pako:eNqVVNFqwyAU_RXxufmBvG7saYPB6MsoiIs3jWviDXpDF0L-fZqkpK2m0AQSOUc9x3PVgReogOcc7KuWRyubg2H-2Tuwjo2YZTi8YNOAIZazA_fvyg9zOzzaEBzBss7jQquVcGS1OU64kQ1ERBKERur6dpoJLzT1sWaJdY1n72eL8kNXSkkC9ovaiNCKpFvp3BmtEpV0VcxaLHUNotXFzI3z7xMdPYrrmp-jjdhEmK3HU2GSpjp2XqAfZijCT9ALg9dLnSIIHxEUQMXKsqMK10Iuq7ysLGG1mKmkW_ijZ7SXqe72UTKT8XazsixjOLC3qehib-bq30R9xw3buympvpBK_PRbJkKJ3_UJNusfkQEYotieqc-jgPiON2D9gVL-lE8yB04V-FPHgwkFpexqCl5G39VPjF-9KXhOtoMd79rgY7kaeF7K2nkUlCa0H_PNMV0gO95K84146TP-A6zSX9U?type=png"/>
+    
+    <h3> Error Codes for User Resources</h3> 
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>User</td>
+        <td>Email101</td>
+        <td>Email is required</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>Email102</td>
+        <td>Invalid email</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>Email103</td>
+        <td>Duplicate email</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>Delete101</td>
+        <td>Can't delete the user, there is a post written by this user</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>User101</td>
+        <td>username is required</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>User103</td>
+        <td>Duplicate user</td>
+      </tr>
+    </tbody>
+    </table>
+    
+    <br><br>
+    <h3> Error Codes for Post Resources</h3> 
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Post</td>
+        <td>Title101</td>
+        <td>Title is required</td>
+      </tr>
+      <tr>
+        <td>Post</td>
+        <td>Content101</td>
+        <td>Content is required</td>
+      </tr>
+      <tr>
+        <td>Post</td>
+        <td>AuthorId101</td>
+        <td>AuthorId is required</td>
+      </tr>
+    </tbody>
+    </table>
+    
+    
+
+servers:
+  - url: http://127.0.0.1:8080/
+paths:
+  /api/user/{user_id}:
+    description: Url to read, update and delete the User resource.
+    get:
+      tags:
+       - user API
+      description: Operation to read user resource
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Amit
+                  username:
+                    type: string
+                    example: amit0123
+                  email:
+                    type: string
+                    example: amit@gmail.com
+                  city:
+                    type: string
+                    example: Jaipur
+                  about_user:
+                    type: string
+                    example: This is about myself
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+       - user API    
+      description: Operation to update the User resource
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Raj
+                email:
+                  type: string
+                  example: raj@gmail.com
+                city:
+                  type: string
+                  example: Bhopal
+                about_user:
+                  type: string
+                  example: This is about myself
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Amit
+                  username:
+                    type: string
+                    example: amit0123
+                  email:
+                    type: string
+                    example: amit@gmail.com
+                  city:
+                    type: string
+                    example: Jaipur
+                  about_user:
+                    type: string
+                    example: This is about myself
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: User not found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+       - user API
+      description: Operation to delete the user resource
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: User not found
+        '500':
+          description: Internal Server Error
+  /api/user:
+    description: Url to create user resource
+    post:
+      tags:
+       - user API
+      description: Operation to create the user resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Amit
+                username:
+                  type: string
+                  example: amit0123
+                email:
+                  type: string
+                  example: amit@gmail.com
+                city:
+                  type: string
+                  example: Jaipur
+                hashed_password:
+                  type: string
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Amit
+                  username:
+                    type: string
+                    example: amit0123
+                  email:
+                    type: string
+                    example: amit@gmail.com
+                  city:
+                    type: string
+                    example: Jaipur
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '409':
+          description: user already exist
+        '500':
+          description: Internal Server Error
+          
+  /api/post/{post_id}:
+    description: Url to read, update and delete the Post resource.
+    get:
+      tags:
+       - post API
+      description: Operation to read post resource
+      parameters:
+        - in: path
+          name: post_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: post object
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: Changes of name
+                  key_note:
+                    type: string
+                    example: A trademark 
+                  content:
+                    type: string
+                    example: bibendum non tortor. Vivamus ut dui vel lectus dictum euismod.
+                  likes:
+                    type: integer
+                    example: 3
+                  poster_name:
+                    type: string
+                    example: Shamik Chauhan 
+        '404':
+          description: post not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+       - post API
+      description: Operation to update the Post resource
+      parameters:
+        - in: path
+          name: post_id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Changes of name
+                key_note:
+                  type: string
+                  example: A trademark 
+                content:
+                  type: string
+                  example: bibendum non tortor. Vivamus ut dui vel lectus dictum euismod.
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: Changes of name
+                  key_note:
+                    type: string
+                    example: A trademark 
+                  content:
+                    type: string
+                    example: bibendum non tortor. Vivamus ut dui vel lectus dictum euismod.
+                  likes:
+                    type: integer
+                    example: 3
+                  poster_name:
+                    type: string
+                    example: Shamik Chauhan 
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: Post not found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+       - post API
+      description: Operation to delete the Post resource
+      parameters:
+        - in: path
+          name: post_id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: Post not found
+        '500':
+          description: Internal Server Error
+  /api/post:
+    description: Url to create Post resource
+    post:
+      tags:
+       - post API
+      description: Operation to create the Post resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  title:
+                    type: string
+                    example: Changes of name
+                  key_note:
+                    type: string
+                    example: A trademark 
+                  content:
+                    type: string
+                    example: bibendum non tortor. Vivamus ut dui vel lectus dictum euismod.
+                  author_id:
+                    type: integer
+                    example: 4
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: Changes of name
+                  key_note:
+                    type: string
+                    example: A trademark 
+                  content:
+                    type: string
+                    example: bibendum non tortor. Vivamus ut dui vel lectus dictum euismod.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+        '500':
+          description: Internal Server Error
+

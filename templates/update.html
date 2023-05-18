@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if user_id == current_user.user_id %}
+
+    <h1>Update User !</h1>
+
+        <br><br>
+        <div class="card">
+            <div class="card-header">
+            <strong>Update User</strong>
+            </div>
+            <div class="card-body">
+                    <div>
+                            <form method="POST" enctype="multipart/form-data" >
+                                {{ form.hidden_tag() }}
+                
+                                {{ form.name.label(class = "form-label") }}
+                
+                                {{ form.name(value = name_to_update.name, class = "form-control") }}
+                                <br>
+                                {{ form.username.label(class = "form-label") }}
+                
+                                {{ form.username(value = name_to_update.username, class = "form-control") }}
+                
+                                <br>
+                
+                                {{ form.email.label(class = "form-label") }}
+                
+                                {{ form.email(value = name_to_update.email, class = "form-control") }}
+                                <br>
+                
+                                {{ form.city.label(class = "form-label") }}
+                
+                                {{ form.city(value = name_to_update.city, class = "form-control") }}
+                                <br>
+    
+                                {{ form.about_user.label(class = "form-label") }}
+    
+                                <textarea name="about_user" class="form-control">{{ name_to_update.about_user }}
+                                </textarea>
+    
+                                <br>
+                
+                                {{ form.profile_pic.label(class = "form-label") }}
+                
+                                {{ form.profile_pic(value = name_to_update.profile_pic, class = "form-control") }}
+                            
+                                <br><br>
+    
+    
+                
+                                {{ form.submit(class="btn btn-primary") }}
+                                
+                                <a href="{{ url_for('delete', user_id = user_id) }}" class="btn btn-danger">delete User</a>
+
+                            </form>
+                        </div>
+           
+            </div>
+    </div>
+    
+
+{% else %}
+        <h2>you have to log in first !! </h2>
+
+{% endif %}
+
+{% endblock %}

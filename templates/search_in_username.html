@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <br><br>
+
+    {% if users %}
+
+    <ol>
+        {% for user in users %}
+            <div class="shadow mb-3 bg-warning rounded d-flex justify-content-between">
+                <div ><h3><li style="padding-left: 6px;">{{ user.name }} </h3></li></div>
+                <a href="{{ url_for('user_view', user_id = user.user_id) }}"><div class="p-2"><button type="button" class="btn btn-info btn-sm" >User info</button></div></a> 
+            </div>
+   
+        {% endfor %}
+    </ol>
+    {% else %}
+    <p>Username <strong>{{ searched }}</strong> is not found ..</p>
+
+    {% endif %}
+
+    <script type="text/javascript">
+        initialize()
+    </script>
+{% endblock %}
